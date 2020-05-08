@@ -1,0 +1,15 @@
+[Unit]
+Description=nfapd collector to port %i
+BindsTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+User=nfdump
+Group=nfdump
+Type=forking
+ExecStart=/usr/bin/nfpcapd -D -y -i %i -l /netflow/%i -P /run/nfdump/nfpcapd.p%i.pid 
+PIDFile=/run/nfdump/nfpcapd.p%i.pid
+
+[Install]
+WantedBy=multi-user.target
+
